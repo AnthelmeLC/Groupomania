@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Connexion</h1>
-    <p>Entrez votre identifiant et votre mot de passe pour vous connexter.</p>
+    <p>Entrez votre identifiant et votre mot de passe pour vous connecter.</p>
     <form action="post" class="container">
       
         <div class="row">

@@ -19,10 +19,21 @@ export default {
 .midnightblue{
     background-color: midnightblue;
 }
+
 .white{
     background-color: white;
     max-width: 60%;
     margin-right: auto;
     margin-left: auto;
+}
+
+img{
+    max-width: 80%;
+}
+
+@media all and (max-width : 550px){
+    .white{
+        max-width: 90%;
+    }
 }
 </style>
