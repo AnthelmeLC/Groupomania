@@ -6,8 +6,8 @@
       
         <div class="row">
           <div class="col-md-5 offset-md-1">
-            <label for="pseudo">Pseudo :</label>
-            <input type="text">
+            <label for="pseudo">email :</label>
+            <input type="email">
           </div>
 
           <div class="col-md-4">
