@@ -37,8 +37,8 @@ exports.login = (req, res, next) => {
             }
             //si le mot de passe est correct, création du token de session
             res.status(200).json({
-                userId : user.id,
-                token : jwt.sign({userId : user.id}, "wQ5EW3QAuK5TT1G", {expiresIn : "30 days"}) //le code de salage est en clair pour que ça fonctionne pour
+                userId : user._id,
+                token : jwt.sign({userId : user._id}, "wQ5EW3QAuK5TT1G", {expiresIn : "30 days"}) //le code de salage est en clair pour que ça fonctionne pour
             });                                                                                  //mon mentor et le jury de OpenClassRooms
         })
         .catch(error => res.status(500).json({error}));
