@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <section>
     <h1>Connexion</h1>
     <p>Entrez votre identifiant et votre mot de passe pour vous connecter.</p>
-    <form action="post" class="container">
+    <form class="container" id="login-form" name="login-form">
       
         <div class="row">
           <div class="col-md-5 offset-md-1">
@@ -20,12 +20,44 @@
 
     </form>
     <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania">
-  </div>
+  </section>
 </template>
 
 <script>
 export default {
-  name: 'login'
+  name: 'login',
+  mounted(){
+    const login = document.getElementById("login-form");
+    login.addEventListener("submit", function(e){
+      e.preventDefault();
+        const form = new FormData(login);
+        let user = {};
+        for(let key of form.keys()){
+          user[key] = form.get(key);
+        }
+        const options = {
+          headers : {
+            "Content-type" : "application/json"
+          },
+          method : "POST",
+          body : JSON.stringify({user : user})
+        };
+        //envoi du formulaire
+        fetch("http://localhost:3000/api/auth/login", options)
+        .then(function(response){
+          if(response.ok){
+            window.location = window.location.origin + "/#/forum";
+          }
+          else{
+            console.log("Mauvaise réponse du réseau.");
+          }
+        })
+        .catch(function(error){
+          console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
+        });
+      return false
+    });
+  }
 }
 </script>
 
