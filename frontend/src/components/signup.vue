@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <section>
     <h1>Inscription</h1>
     <p>Veuillez renseigner tous les champs ci-dessous pour vous inscrire.</p>
-    <form action="post" class="container">
+    <form class="container" name="signup-form" id="signup-form">
       
         <div class="row">
           <div class="col-md-5 offset-md-1">
@@ -24,19 +24,19 @@
 
           <div class="col-md-4">
             <label for="email">Email :</label>
-            <input type="email">
+            <input type="email" id="email">
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-5 offset-md-1">
             <label for="password">Mot de passe :</label>
-            <input type="password">
+            <input type="password" id="password">
           </div>
 
           <div class="col-md-4">
             <label for="confirmation-password">Confirmation :</label>
-            <input type="password">
+            <input type="password" id="password-confirmation">
           </div>
         </div>
 
@@ -48,17 +48,94 @@
         </div>
 
 
-      <button class="btn btn-primary">Inscription</button>
+      <button class="btn btn-primary" id="signup">Inscription</button>
 
     </form>
     <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania">
-  </div>
+  </section>
 </template>
 
 <script>
+
 export default {
-  name: 'signup'
-}
+  name: 'signup',
+  mounted(){
+    //vérification de la saisie de l'utilisateur au moment de celle-ci
+    const inputs = document.getElementsByTagName("input");
+    for(let input of inputs){
+      input.addEventListener("input", function(){
+        if(input.value.length < 3){
+          input.className = "invalid";
+        }
+        else{
+          input.className = "valid";
+        }
+      });
+    }
+    //vérification de la saisie d'un email conforme
+    const regexEmail = /^\S+@[a-zA-Z]{2,}\.[a-zA-Z]{2,4}$/;
+    const email = document.getElementById("email");
+    email.addEventListener("input", function(){
+      if(!regexEmail.test(email.value)){
+        email.className = "invalid";
+      }
+      else{
+        email.className = "valid";
+      }
+    });
+    //Vérification que le deuxième mot de passe est identique au premier
+    const password = document.getElementById("password");
+    const passwordConfirmation = document.getElementById("password-confirmation");
+    passwordConfirmation.addEventListener("input", function(){
+      if(passwordConfirmation.value !=  password.value){
+      passwordConfirmation.className = "invalid";
+      password.className = "invalid";
+      }
+      else{
+        passwordConfirmation.className = "valid";
+        password.className = "valid";
+      }
+    })
+
+    const signup = document.getElementById("signup-form");
+    signup.addEventListener("submit", function(e){
+      e.preventDefault();
+      if(document.getElementsByClassName("invalid").lenght > 0){
+        alert("Inscription impossible, veuillez renseigner correctement le formulaire.");
+      }
+      else{
+        //récupération des données du formulaire
+        const form = new FormData(signup);
+        let user = {};
+        for(let key of form.keys()){
+          user[key] = form.get(key);
+        }
+        const options = {
+          headers : {
+            "Content-type" : "application/json"
+          },
+          method : "POST",
+          body : JSON.stringify({user : user})
+        };
+        //envoi du formulaire
+        fetch("http://localhost:3000/api/auth/signup", options)
+        .then(function(response){
+          if(response.ok){
+            alert("Vous êtes bien inscrit! Vous pouvez maintenant vous connecter.");
+          }
+          else{
+            console.log("Mauvaise réponse du réseau.");
+          }
+        })
+        .catch(function(error){
+          console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
+        });
+      }
+      return false
+    });
+  }
+};
+
 </script>
 
 <style scoped lang="scss">
@@ -79,6 +156,14 @@ p{
 input{
   margin-left: 5px;
   margin-right: 5%;
+}
+
+.valid{
+  border-color: green;
+}
+
+.invalid{
+  border-color: red;
 }
 
 button{
