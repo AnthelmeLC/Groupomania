@@ -48,7 +48,7 @@
         </div>
 
 
-      <button class="btn btn-primary" id="signup">Inscription</button>
+      <button class="btn btn-primary">Inscription</button>
 
     </form>
     <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania">

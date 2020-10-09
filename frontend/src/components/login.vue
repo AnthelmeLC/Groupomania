@@ -30,31 +30,31 @@ export default {
     const login = document.getElementById("login-form");
     login.addEventListener("submit", function(e){
       e.preventDefault();
-        const form = new FormData(login);
-        let user = {};
-        for(let key of form.keys()){
-          user[key] = form.get(key);
+      const form = new FormData(login);
+      let user = {};
+      for(let key of form.keys()){
+        user[key] = form.get(key);
+      }
+      const options = {
+        headers : {
+          "Content-type" : "application/json"
+        },
+        method : "POST",
+        body : JSON.stringify({user : user})
+      };
+      //envoi du formulaire
+      fetch("http://localhost:3000/api/auth/login", options)
+      .then(function(response){
+        if(response.ok){
+          window.location = window.location.origin + "/#/forum";
         }
-        const options = {
-          headers : {
-            "Content-type" : "application/json"
-          },
-          method : "POST",
-          body : JSON.stringify({user : user})
-        };
-        //envoi du formulaire
-        fetch("http://localhost:3000/api/auth/login", options)
-        .then(function(response){
-          if(response.ok){
-            window.location = window.location.origin + "/#/forum";
-          }
-          else{
-            console.log("Mauvaise réponse du réseau.");
-          }
-        })
-        .catch(function(error){
-          console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
-        });
+        else{
+          console.log("Mauvaise réponse du réseau.");
+        }
+      })
+      .catch(function(error){
+        console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
+      });
       return false
     });
   }
