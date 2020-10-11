@@ -28,7 +28,7 @@ export default {
             }
         })
         .catch(function(error){
-            console.log("il y a eu un problème avec l'opération fetch : " + error.message);
+            console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
         });
     },
     mounted(){
@@ -44,7 +44,7 @@ export default {
               body : JSON.stringify({message : textArea.value})
             };
             const currentMessage = window.location.search.substring(4);
-            fetch("http://localhost:3000/api/messages/"+currentMessage, options)
+            fetch("http://localhost:3000/api/messages/" + currentMessage, options)
             .then(function(response){
               if(response.ok){
                 window.location = window.location.origin + "/#/forum";

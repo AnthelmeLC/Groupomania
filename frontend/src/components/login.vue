@@ -7,12 +7,12 @@
         <div class="row">
           <div class="col-md-5 offset-md-1">
             <label for="pseudo">email :</label>
-            <input type="email">
+            <input type="email" required>
           </div>
 
           <div class="col-md-4">
             <label for="password">Mot de passe :</label>
-            <input type="password">
+            <input type="password" required>
           </div>
         </div>
 

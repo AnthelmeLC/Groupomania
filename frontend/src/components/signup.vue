@@ -7,43 +7,43 @@
         <div class="row">
           <div class="col-md-5 offset-md-1">
             <label for="name">Nom :</label>
-            <input type="text">
+            <input type="text" required>
           </div>
 
           <div class="col-md-4">
             <label for="surname">Prénom :</label>
-            <input type="text">
+            <input type="text" required>
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-5 offset-md-1">
             <label for="pseudo">Pseudo :</label>
-            <input type="text">
+            <input type="text" required>
           </div>
 
           <div class="col-md-4">
             <label for="email">Email :</label>
-            <input type="email" id="email">
+            <input type="email" id="email" required>
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-5 offset-md-1">
             <label for="password">Mot de passe :</label>
-            <input type="password" id="password">
+            <input type="password" id="password" required>
           </div>
 
           <div class="col-md-4">
             <label for="confirmation-password">Confirmation :</label>
-            <input type="password" id="password-confirmation">
+            <input type="password" id="password-confirmation" required>
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-5 offset-md-1">
             <label for="job">Poste dans l'entreprise :</label>
-            <input type="text">
+            <input type="text" required>
           </div>
         </div>
 

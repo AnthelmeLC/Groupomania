@@ -5,11 +5,11 @@
             <section class="container">
                 <h1>Lâchez vous !</h1>
                 <div class="text-align-left">
-                    <button class="btn btn-info post">Poster</button>
+                    <a href="/#/post" class="btn btn-info post">Poster</a>
                     <div id="messages">
 
                     </div>
-                    <button class="btn btn-info post">Poster</button>
+                    <a href="/#/post" class="btn btn-info post">Poster</a>
                 </div>
             </section>
         </div>
@@ -37,7 +37,7 @@ export default {
             }
         })
         .catch(function(error){
-            console.log("il y a eu un problème avec l'opération fetch : " + error.message);
+            console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
         });
     },
     mounted(){
@@ -48,9 +48,25 @@ export default {
             messages.appendChild(newMessage);
             newMessage.setAttribute("class", "row bigRow");
             
-            const remove = document.getElementById("delete"+message._id);
+            const remove = document.getElementById("delete" + message._id);
             remove.addEventListener("click", function(){
-                console.log("encore un joli click!");
+                const options = {
+                    headers : {
+                        method : "DELETE"
+                    }
+                };
+                fetch("http://localhost/api/messages/" + message._id, options)
+                .then(function(response){
+                    if(response.ok){
+                        alert("Message supprimé!");
+                    }
+                    else{
+                        console.log("Mauvaise réponse du réseau");
+                    }
+                })
+                .catch(function(error){
+                    console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
+                });
             });
         }
     }
