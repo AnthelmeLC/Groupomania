@@ -1,6 +1,5 @@
 <template>
   <section id="message">
-    <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupimania" id="logoGroupomania">
     <h1>Modifiez votre message :</h1>
     <form>
         <textarea name="message" rows="5" cols="100" id="text"></textarea>
@@ -13,10 +12,10 @@
 export default {
     name: 'login',
     data(){
-        return {msg : {_id : 1, text : "Salut à tous, je n'arrive pas à finir mon projet à temps, quelqu'un peut il venir m'aider svp?", time : "heure", userPseudo : "test", userJob : "testeur"}}
+        return {msg : {id : 1, text : "Salut à tous, je n'arrive pas à finir mon projet à temps, quelqu'un peut il venir m'aider svp?", time : "heure", userPseudo : "test", userJob : "testeur"}}
     },
     beforeMount(){
-        const currentMessage = window.location.search.substring(4);
+        const currentMessage = window.location.href.split("?id=")[1];
         fetch("http://localhost:3000/api/messages/" + currentMessage)
         .then(function(response){
             if(response.ok){
@@ -47,7 +46,7 @@ export default {
             fetch("http://localhost:3000/api/messages/" + currentMessage, options)
             .then(function(response){
               if(response.ok){
-                window.location = window.location.origin + "/#/forum";
+                window.location = window.location.origin + "/forum";
               }
               else{
                 console.log("Mauvaise réponse du réseau.");

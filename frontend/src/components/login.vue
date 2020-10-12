@@ -6,20 +6,19 @@
       
         <div class="row">
           <div class="col-md-5 offset-md-1">
-            <label for="pseudo">email :</label>
-            <input type="email" required>
+            <label for="email">email :</label>
+            <input type="email" required id="email" name="email">
           </div>
 
           <div class="col-md-4">
             <label for="password">Mot de passe :</label>
-            <input type="password" required>
+            <input type="password" required name="password">
           </div>
         </div>
 
       <button class="btn btn-info">Connexion</button>
 
     </form>
-    <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania">
   </section>
 </template>
 
@@ -46,7 +45,7 @@ export default {
       fetch("http://localhost:3000/api/auth/login", options)
       .then(function(response){
         if(response.ok){
-          window.location = window.location.origin + "/#/forum";
+          window.location = window.location.origin + "/forum";
         }
         else{
           console.log("Mauvaise réponse du réseau.");

@@ -1,10 +1,9 @@
 <template>
-  <div class="home">
-    <img alt="Logo Groupomania" src="@/assets/icon-above-font.svg">
+  <section class="home">
     <h1>Bienvenue sur le réseau social de Groupomania !</h1>
-    <a class="btn btn-primary" href="#/signup">s'inscire</a>
-    <a class="btn btn-info" href="#/login">se connecter</a>
-  </div>
+    <a class="btn btn-primary" href="/signup">s'inscire</a>
+    <a class="btn btn-info" href="/login">se connecter</a>
+  </section>
 </template>
 
 <script>

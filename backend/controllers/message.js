@@ -10,20 +10,18 @@ exports.getAllMessages = (req, res, next) => {
 
 //GET ONE
 exports.getOneMessage = (req, res, next) => {
-    Message.findById(req.params.id)
+    Message.findOne({where : {id : req.params.id}})
     .then(message => res.status(200).json(message))
     .catch(error => res.status(400).json({error}));
 };
 
 //POST NEW
 exports.createMessage = (req, res, next) => {
-    const messageObject = JSON.parse(req.body.message);
-    delete messageObject._id;
-    //création du nouveau message
-    const message = new Message({
-        ...messageObject
-    });
-    message.save()
+    Message.create({
+        //userId : ???,
+        time : Date(),
+        message : req.body.message
+    })
     .then(() => res.status(201).json({message : "Message envoyé!"}))
     .catch(error => res.status(400).json({error}));
 };
@@ -31,23 +29,18 @@ exports.createMessage = (req, res, next) => {
 //MODIFY ONE
 exports.modifyMessage = (req, res, next) => {
     //recherche du message dans la base de donnée
-    Message.findById(req.body.id)
-    .then(message => {
-        //mise à jour du message
-        const messageObject = {
-            ...message,
-            message : req.body.message
-        };
-        Message.updateOne({_id : req.params.id}, {...messageObject, _id : req.params.id})
-        .then(() => res.status(200).json({message : "Message modifié."}))
-        .catch(error => res.status(400).json({error}));
+    Message.update({ message : req.body.message}, {
+        where : {id : req.params.id}
     })
+    .then(() => res.status(200).json({message : "Message modifié."}))
     .catch(error => res.status(400).json({error}));
 };
 
 //DELETE ONE
 exports.deleteMessage = (req, res, next) => {
-    Message.deleteOne(req.params.id)
+    Message.destroy({where : {
+        id : req.params.id
+    }})
     .then(() => res.status(200).json({message : "Message supprimé."}))
     .catch(error => res.status(400).json({error}));
 };
