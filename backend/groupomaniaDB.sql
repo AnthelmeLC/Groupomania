@@ -26,19 +26,20 @@ CREATE DATABASE groupomaniaDB CHARACTER SET 'utf8';
 --
 
 CREATE USER 'groupomania'@'localhost' IDENTIFIED BY 'Fnb6egNYrY';
-GRANT ALL ON groupomaniaDB TO 'groupomania'@'localhost';
+GRANT ALL ON groupomaniaDB.* TO 'groupomania'@'localhost';
 
 --
 -- Table structure for table `messages`
 --
-
+USE groupomaniaDB;
 DROP TABLE IF EXISTS `messages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `messages` (
   `id` smallint unsigned NOT NULL AUTO_INCREMENT,
   `userId` smallint unsigned NOT NULL,
-  `time` datetime NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime,
   `message` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_userId` (`userId`),
@@ -70,6 +71,7 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `password` varchar(100) NOT NULL,
   `job` varchar(50) NOT NULL,
+  `moderator` BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pseudo` (`pseudo`),
   UNIQUE KEY `email` (`email`)
@@ -81,7 +83,7 @@ CREATE TABLE `users` (
 --
 
 LOCK TABLES `users` WRITE;
-INSERT INTO Users VALUES (name : 'Jane', surname : 'Doe', pseudo : 'UltimateModerator', email : 'moderator@moderator.com', password : '$2b$10$MW1iRQnajWs.KakQuIITmuOYZAJtLxoTmTtyTop82d.3Ejh9RNSfO', job : 'chargée de communication', moderator : true);
+INSERT INTO Users VALUES (name, surname, pseudo, email, password, job, moderator) ('Jane', 'Doe', 'UltimateModerator', 'moderator@moderator.com', '$2b$10$MW1iRQnajWs.KakQuIITmuOYZAJtLxoTmTtyTop82d.3Ejh9RNSfO', 'chargée de communication', true);
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
