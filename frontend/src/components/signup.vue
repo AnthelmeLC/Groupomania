@@ -125,7 +125,7 @@ export default {
         .then(function(response){
           if(response.ok){
             alert("Vous êtes bien inscrit! Vous pouvez maintenant vous connecter.");
-            window.location = window.location.orginin
+            window.location = window.location.origin;
           }
           else{
             console.log("Mauvaise réponse du réseau.");

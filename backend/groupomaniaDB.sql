@@ -16,6 +16,19 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Creation of the DB
+--
+
+CREATE DATABASE groupomaniaDB CHARACTER SET 'utf8';
+
+--
+-- User of the DB
+--
+
+CREATE USER 'groupomania'@'localhost' IDENTIFIED BY 'Fnb6egNYrY';
+GRANT ALL ON groupomaniaDB TO 'groupomania'@'localhost';
+
+--
 -- Table structure for table `messages`
 --
 
@@ -68,6 +81,7 @@ CREATE TABLE `users` (
 --
 
 LOCK TABLES `users` WRITE;
+INSERT INTO Users VALUES (name : 'Jane', surname : 'Doe', pseudo : 'UltimateModerator', email : 'moderator@moderator.com', password : '$2b$10$MW1iRQnajWs.KakQuIITmuOYZAJtLxoTmTtyTop82d.3Ejh9RNSfO', job : 'chargée de communication', moderator : true);
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

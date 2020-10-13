@@ -45,7 +45,13 @@ export default {
       fetch("http://localhost:3000/api/auth/login", options)
       .then(function(response){
         if(response.ok){
-          window.location = window.location.origin + "/forum";
+          response.json().then(function(myJson){
+            sessionStorage.clear;
+            sessionStorage.setItem("userId" , myJson.userId);
+            sessionStorage.setItem("token" , myJson.token);
+            sessionStorage.setItem("moderator", myJson.moderator);
+            window.location = window.location.origin + "/forum";
+          });
         }
         else{
           console.log("Mauvaise réponse du réseau.");

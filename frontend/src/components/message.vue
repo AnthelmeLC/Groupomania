@@ -12,19 +12,22 @@
 export default {
     name: 'login',
     data(){
-        return {msg : {id : 1, text : "Salut à tous, je n'arrive pas à finir mon projet à temps, quelqu'un peut il venir m'aider svp?", time : "heure", userPseudo : "test", userJob : "testeur"}}
+        return {msg : null};
     },
     beforeMount(){
         const currentMessage = window.location.href.split("?id=")[1];
         fetch("http://localhost:3000/api/messages/" + currentMessage)
-        .then(function(response){
-            if(response.ok){
-                response.json().then(function(myJson){
-                    this.msg = myJson;
-                });
-            }else{
-                console.log("Mauvaise réponse du réseau");
-            }
+        .then((response) => {
+          if(response.ok){
+              response.json()
+              .then((myJson) => {
+                this.msg = myJson.message;
+                const textArea = document.getElementById("text");
+                textArea.innerHTML = this.msg;
+              });
+          }else{
+              console.log("Mauvaise réponse du réseau");
+          }
         })
         .catch(function(error){
             console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
@@ -32,29 +35,30 @@ export default {
     },
     mounted(){
         const textArea = document.getElementById("text");
-        textArea.innerHTML = `${this.msg.text}`;
         const modify = document.getElementById("modify");
-        modify.addEventListener("click", function(){
-            const options = {
-              headers : {
-                "Content-type" : "application/json"
-              },
-              method : "PUT",
-              body : JSON.stringify({message : textArea.value})
-            };
-            const currentMessage = window.location.search.substring(4);
-            fetch("http://localhost:3000/api/messages/" + currentMessage, options)
-            .then(function(response){
-              if(response.ok){
-                window.location = window.location.origin + "/forum";
-              }
-              else{
-                console.log("Mauvaise réponse du réseau.");
-              }
-            })
-            .catch(function(error){
-              console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
-            });
+        modify.addEventListener("click", function(e){
+          e.preventDefault();
+          const currentMessage = window.location.search.substring(4);
+          const options = {
+            headers : {
+              "Content-type" : "application/json"
+            },
+            method : "PUT",
+            body : JSON.stringify({message : textArea.value})
+          };
+          fetch("http://localhost:3000/api/messages/" + currentMessage, options)
+          .then(function(response){
+            if(response.ok){
+              window.location = window.location.origin + "/forum";
+            }
+            else{
+              console.log("Mauvaise réponse du réseau.");
+            }
+          })
+          .catch(function(error){
+            console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
+          });
+          return false;
         });
     }
 }

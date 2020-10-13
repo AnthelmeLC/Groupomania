@@ -12,6 +12,7 @@
 export default {
   name: 'post',
   mounted(){
+    console.log(sessionStorage.getItem("userId"));
     const post = document.getElementById("post");
     post.addEventListener("submit", function(e){
       e.preventDefault();
@@ -21,9 +22,9 @@ export default {
           "Content-type" : "application/json"
         },
         method : "POST",
-        body : JSON.stringify({message : message})
+        body : JSON.stringify({message : message, userId : sessionStorage.getItem("userId")})
       };
-      fetch("http://localhost/api/messages/", options)
+      fetch("http://localhost:3000/api/messages/", options)
       .then(function(response){
         if(response.ok){
           window.location = window.location.origin + "/forum";
