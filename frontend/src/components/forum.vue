@@ -1,15 +1,14 @@
 <template>
     <div class="midnightblue">
         <div class="white">
-            <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupimania" id="logoGroupomania">
             <section class="container">
                 <h1>Lâchez vous !</h1>
                 <div class="text-align-left">
-                    <a href="/#/post" class="btn btn-info post">Poster</a>
+                    <a href="/post" class="btn btn-info post">Poster</a>
                     <div id="messages">
 
                     </div>
-                    <a href="/#/post" class="btn btn-info post">Poster</a>
+                    <a href="/post" class="btn btn-info post">Poster</a>
                 </div>
             </section>
         </div>
@@ -19,17 +18,69 @@
 <script>
 export default {
     name: 'forum',
+
     data(){
-        return {msg : [
-            {_id : 1, message : "Salut à tous, je n'arrive pas à finir mon projet à temps, quelqu'un peut il venir m'aider svp?", time : "heure", userPseudo : "test", userJob : "testeur"},
-            {_id : 2, message : "Salut test! Je serais dispo demain à 15h si tu as toujours besoin, je pourrais te filer un coup de main toute la fin d'après midi. Mon projet est terminé et je connais bien le tiens, ça devrait aller vite :) Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn. Ng'bthnk Nyarlathotep lw'nafh, mg hai ph'hlirgh nw ebunma ch' mg, nnnsyha'h shogg Shub-Niggurathor ftaghu hlirgh kn'a k'yarnak. CDagon bug nog kn'a Dagon h'orr'e eeoth syha'h Azathoth lloigoth, r'luh ebunma shtunggli R'lyeh ngch' y-ebunma uaaah cvulgtlagln hupadgh, llll throd hafh'drn ph'ftaghu nog lloig f'uh'e s'uhn. Kn'a stell'bsna shtunggli kadishtu hrii f'hafh'drn chtenff ngfhtagn nanilgh'ri zhro sll'ha naDagon ebunma 'fhalma, tharanak ph'mnahn' mnahn' hafh'drn nnnehye llll athg nglui throd 'bthnk kn'a. H'hrii 'ai hlirgh naflbug fhtagnog hai Chaugnar Faugn kadishtu, Tsathoggua Azathoth shtunggli nilgh'ri Chaugnar Faugnyar f'orr'e gothayar, ch' ph'goka y'hah goka h'ilyaa h'hupadgh.", time : "heure", userPseudo : "omégaFort", userJob : "meilleurTesteur"}
-    ]}},
+        return {msg : []}
+    },
+
     beforeMount(){
-        fetch("http://localhost/api/messages/")
-        .then(function(response){
+        //options de la requête
+        const options = {
+            headers : {
+                authorization : localStorage.getItem("userId") + " " + localStorage.getItem("token")
+            }
+        };
+        //requête pour récupérer tous les messages à afficher
+        fetch("http://localhost:3000/api/messages/", options)
+        .then((response) => {
             if(response.ok){
-                response.json().then(function(myJson){
+                //récupération de tous les messages réussie
+                response.json()
+                .then((myJson) =>{
+                    //insertion des messages dans data
                     this.msg = myJson;
+                    const messages = document.getElementById('messages');
+                    //mise en page de chaque message contenu dans data
+                    for(let message of this.msg){
+                        const newMessage = document.createElement("div");
+                        newMessage.innerHTML = `<div class="col-md-8"><p>${message.message}</p></div><div class="col-md-4"><div class="row"><div class="col-md-7"><p>${message.createdAt}</p><p>${message.User.pseudo}<br>${message.User.job}</p></div><div class="col-md-5" id="img${message.id}"><a href="/message?id=${message.id}"><img src="./logoWrite.png" alt="logo modifier le message" id="modify${message.id}" title="Modifier le message"></a><img src="./logoWrong.png" alt="logo supprimer le message" id="delete${message.id}" title="Supprimer le message"></div></div></div>`;
+                        messages.appendChild(newMessage);
+                        newMessage.setAttribute("class", "row bigRow");
+                        if(message.User.id != localStorage.getItem("userId") && localStorage.getItem("moderator") != "true"){
+                            const img = document.getElementById("img" + message.id);
+                            img.setAttribute("class", "none");
+                        }
+
+                        //événement click sur chaque boutton delete
+                        const remove = document.getElementById("delete" + message.id);
+                        remove.addEventListener("click", function(){
+                            //options de la requête
+                            const options = {
+                                headers : {
+                                  "Content-type" : "application/json",
+                                  authorization : localStorage.getItem("userId") + " " + localStorage.getItem("token")
+                                },
+                                method : "DELETE"
+                            };
+                            //envoi de la requête de suppression du message
+                            fetch("http://localhost:3000/api/messages/" + message.id, options)
+                            .then(function(response){
+                                if(response.ok){
+                                    //suppression dans la DB réussie
+                                    //avertissement de la suppression à l'utilisateur
+                                    alert("Message supprimé!");
+                                    //rafraichissement de la page du forum
+                                    window.location.reload();
+                                }
+                                else{
+                                    console.log("Mauvaise réponse du réseau");
+                                }
+                            })
+                            .catch(function(error){
+                                console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
+                            });
+                        });
+                    }
                 });
             }
             else{
@@ -39,36 +90,6 @@ export default {
         .catch(function(error){
             console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
         });
-    },
-    mounted(){
-        const messages = document.getElementById('messages');
-        for(let message of this.msg){
-            const newMessage = document.createElement("div");
-            newMessage.innerHTML = `<div class="col-md-8"><p>${message.message}</p></div><div class="col-md-4"><div class="row"><div class="col-md-7"><p>${message.time}</p><p>${message.userPseudo}<br>${message.userJob}</p></div><div class="col-md-5"><a href="#/message?id=${message._id}"><img src="./logoWrite.png" alt="logo modifier le message" id="modify${message._id}" title="Modifier le message"></a><img src="./logoWrong.png" alt="logo supprimer le message" id="delete${message._id}" title="Supprimer le message"></div></div></div>`;
-            messages.appendChild(newMessage);
-            newMessage.setAttribute("class", "row bigRow");
-            
-            const remove = document.getElementById("delete" + message._id);
-            remove.addEventListener("click", function(){
-                const options = {
-                    headers : {
-                        method : "DELETE"
-                    }
-                };
-                fetch("http://localhost/api/messages/" + message._id, options)
-                .then(function(response){
-                    if(response.ok){
-                        alert("Message supprimé!");
-                    }
-                    else{
-                        console.log("Mauvaise réponse du réseau");
-                    }
-                })
-                .catch(function(error){
-                    console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
-                });
-            });
-        }
     }
 };
 </script>
@@ -106,6 +127,7 @@ h1{
     color: white;
     border-radius: 20px;
     margin-bottom: 0.5%;
+    font-size: large;
 }
 
 .col-md-8{
@@ -126,6 +148,12 @@ h1{
     border: midnightblue solid 2px;
     margin-top: 0.5%;
     margin-bottom: 0.5%;
+    font-size: large;
+}
+
+.none{
+    display: none;
+    background-color: red;
 }
 
 @media all and (max-width: 768px){
@@ -135,11 +163,6 @@ h1{
     }
 
     .col-md-4{
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .col-md-7{
         display: flex;
         justify-content: space-around;
     }

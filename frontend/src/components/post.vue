@@ -1,6 +1,5 @@
 <template>
   <section id="talk">
-    <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupimania" id="logoGroupomania">
     <h1>Exprimez-vous !</h1>
     <form id="post">
       <textarea name="message" rows="5" cols="100" id="text" required></textarea>
@@ -12,22 +11,30 @@
 <script>
 export default {
   name: 'post',
+
   mounted(){
     const post = document.getElementById("post");
+    //événement submit de l'envoi d'un nouveau message
     post.addEventListener("submit", function(e){
       e.preventDefault();
+      //récupération du texte écrit par l'utilisateur
       const message = document.getElementById("text").value;
+      //options de la requête
       const options = {
         headers : {
-          "Content-type" : "application/json"
+          "Content-type" : "application/json",
+          authorization : localStorage.getItem("userId") + " " + localStorage.getItem("token")
         },
         method : "POST",
-        body : JSON.stringify({message : message})
+        body : JSON.stringify({message : message, userId : localStorage.getItem("userId")})
       };
-      fetch("http://localhost/api/messages/", options)
+      //envoi du nouveau message
+      fetch("http://localhost:3000/api/messages/", options)
       .then(function(response){
         if(response.ok){
-          window.location = window.location.origin + "/#/forum";
+          //l'envoi a réussi
+          //redirection vers la page du forum
+          window.location = window.location.origin + "/forum";
         }
         else{
           console.log("Mauvaise réponse du réseau.");

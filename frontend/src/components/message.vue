@@ -1,83 +1,104 @@
 <template>
   <section id="message">
-    <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupimania" id="logoGroupomania">
     <h1>Modifiez votre message :</h1>
     <form>
-        <textarea name="message" rows="5" cols="100" id="text"></textarea>
-        <button class="btn btn-info" id="modify">Modifier</button>
+      <textarea name="message" rows="5" cols="100" id="text"></textarea>
+      <button class="btn btn-info" id="modify">Modifier</button>
     </form>
-</section>
+  </section>
 </template>
 
 <script>
 export default {
-    name: 'login',
-    data(){
-        return {msg : {_id : 1, text : "Salut à tous, je n'arrive pas à finir mon projet à temps, quelqu'un peut il venir m'aider svp?", time : "heure", userPseudo : "test", userJob : "testeur"}}
-    },
-    beforeMount(){
-        const currentMessage = window.location.search.substring(4);
-        fetch("http://localhost:3000/api/messages/" + currentMessage)
-        .then(function(response){
-            if(response.ok){
-                response.json().then(function(myJson){
-                    this.msg = myJson;
-                });
-            }else{
-                console.log("Mauvaise réponse du réseau");
-            }
-        })
-        .catch(function(error){
-            console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
+  name: 'login',
+
+  data(){
+    return {msg : null};
+  },
+
+  beforeMount(){
+    //options de la requête
+    const options = {
+      headers : {
+        authorization : localStorage.getItem("userId") + " " + localStorage.getItem("token")
+      }
+    };
+    const currentMessage = window.location.href.split("?id=")[1];
+    //requête pour récupérer le message à modifier
+    fetch("http://localhost:3000/api/messages/" + currentMessage, options)
+    .then((response) => {
+      if(response.ok){
+        response.json()
+        .then((myJson) => {
+          //insertion du message dans data
+          this.msg = myJson.message;
+          //affichage du message à modifier dans la textArea
+          const textArea = document.getElementById("text");
+          textArea.innerHTML = this.msg;
         });
-    },
-    mounted(){
-        const textArea = document.getElementById("text");
-        textArea.innerHTML = `${this.msg.text}`;
-        const modify = document.getElementById("modify");
-        modify.addEventListener("click", function(){
-            const options = {
-              headers : {
-                "Content-type" : "application/json"
-              },
-              method : "PUT",
-              body : JSON.stringify({message : textArea.value})
-            };
-            const currentMessage = window.location.search.substring(4);
-            fetch("http://localhost:3000/api/messages/" + currentMessage, options)
-            .then(function(response){
-              if(response.ok){
-                window.location = window.location.origin + "/#/forum";
-              }
-              else{
-                console.log("Mauvaise réponse du réseau.");
-              }
-            })
-            .catch(function(error){
-              console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
-            });
-        });
-    }
+      }else{
+        console.log("Mauvaise réponse du réseau");
+      }
+    })
+    .catch(function(error){
+      console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
+    });
+  },
+
+  mounted(){
+    const textArea = document.getElementById("text");
+    const modify = document.getElementById("modify");
+    //événement click du boutton "modidifer"
+    modify.addEventListener("click", function(e){
+      e.preventDefault();
+      const currentMessage = window.location.search.substring(4);
+      //options de la requête
+      const options = {
+        headers : {
+          "Content-type" : "application/json",
+          authorization : localStorage.getItem("userId") + " " + localStorage.getItem("token")
+        },
+        method : "PUT",
+        body : JSON.stringify({message : textArea.value})
+      };
+      //envoi du nouveau texte à mettre à jour dans la BD
+      fetch("http://localhost:3000/api/messages/" + currentMessage, options)
+      .then(function(response){
+        //modification du message réussie
+        if(response.ok){
+          //redirection vers la page du forum
+          window.location = window.location.origin + "/forum";
+        }
+        else{
+          console.log("Mauvaise réponse du réseau.");
+        }
+      })
+      .catch(function(error){
+        console.log("Il y a eu un problème avec l'opération fetch : " + error.message);
+      });
+      return false;
+    });
+  }
 }
 </script>
 
 <style scoped lang="scss">
 form{
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
+
 h1{
   margin-bottom: 3%;
-  color: #138496;
 }
 
 textarea{
-    border: #138496 solid 1px;
-    margin-bottom: 1%;
+  border: #138496 solid 1px;
+  margin-bottom: 1%;
 }
 
 form{
-    align-items: center;
+  align-items: center;
 }
 
 @media all and (max-width : 768px){

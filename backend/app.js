@@ -1,14 +1,14 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const {Sequelize} = require("sequelize");
-//const path = require("path");
+const DBinstance = require("./DBinstance");
 
 const messageRoutes = require("./routes/message");
 const userRoutes = require("./routes/user");
 
 const app = express();
-const sequelize = new Sequelize("groupomaniaDB", "groupomania","Fnb6egNYrY", {dialect : "mysql", host : "localhost"});
-sequelize.authenticate()
+
+DBinstance.authenticate()
 .then(() => console.log("Connexion à groupomaniaDB réussie!"))
 .catch(() => console.log("Connexion à groupomaniaDB échouée!"));
 

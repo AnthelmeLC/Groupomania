@@ -2,56 +2,62 @@
   <section>
     <h1>Inscription</h1>
     <p>Veuillez renseigner tous les champs ci-dessous pour vous inscrire.</p>
-    <form class="container" name="signup-form" id="signup-form">
+    <form class="container" name="signup" id="signup">
       
-        <div class="row">
-          <div class="col-md-5 offset-md-1">
-            <label for="name">Nom :</label>
-            <input type="text" required>
-          </div>
+      <div class="row">
 
-          <div class="col-md-4">
-            <label for="surname">Prénom :</label>
-            <input type="text" required>
-          </div>
+        <div class="col-md-5 offset-md-1">
+          <label for="name">Nom :</label>
+          <input type="text" required name="name">
         </div>
 
-        <div class="row">
-          <div class="col-md-5 offset-md-1">
-            <label for="pseudo">Pseudo :</label>
-            <input type="text" required>
-          </div>
-
-          <div class="col-md-4">
-            <label for="email">Email :</label>
-            <input type="email" id="email" required>
-          </div>
+        <div class="col-md-4">
+          <label for="surname">Prénom :</label>
+          <input type="text" required name="surname">
         </div>
 
-        <div class="row">
-          <div class="col-md-5 offset-md-1">
-            <label for="password">Mot de passe :</label>
-            <input type="password" id="password" required>
-          </div>
+      </div>
 
-          <div class="col-md-4">
-            <label for="confirmation-password">Confirmation :</label>
-            <input type="password" id="password-confirmation" required>
-          </div>
+      <div class="row">
+
+        <div class="col-md-5 offset-md-1">
+          <label for="pseudo">Pseudo :</label>
+          <input type="text" required name="pseudo">
         </div>
 
-        <div class="row">
-          <div class="col-md-5 offset-md-1">
-            <label for="job">Poste dans l'entreprise :</label>
-            <input type="text" required>
-          </div>
+        <div class="col-md-4">
+          <label for="email">Email :</label>
+          <input type="email" id="email" required name="email">
         </div>
 
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-5 offset-md-1">
+          <label for="password">Mot de passe :</label>
+          <input type="password" id="password" required name="password">
+        </div>
+
+        <div class="col-md-4">
+          <label for="confirmation-password">Confirmation :</label>
+          <input type="password" id="password-confirmation" required>
+        </div>
+
+      </div>
+  
+      <div class="row">
+
+        <div class="col-md-5 offset-md-1">
+          <label for="job">Poste dans l'entreprise :</label>
+          <input type="text" required name="job">
+        </div>
+
+      </div>
 
       <button class="btn btn-primary">Inscription</button>
 
     </form>
-    <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania">
   </section>
 </template>
 
@@ -97,12 +103,15 @@ export default {
       }
     })
 
-    const signup = document.getElementById("signup-form");
+    //Evénement à l'envoi du formulaire
+    const signup = document.getElementById("signup");
     signup.addEventListener("submit", function(e){
       e.preventDefault();
+      //Si le formulaire n'est pas conforme
       if(document.getElementsByClassName("invalid").lenght > 0){
         alert("Inscription impossible, veuillez renseigner correctement le formulaire.");
       }
+      //Si le formulaire est conforme
       else{
         //récupération des données du formulaire
         const form = new FormData(signup);
@@ -110,6 +119,7 @@ export default {
         for(let key of form.keys()){
           user[key] = form.get(key);
         }
+        //options de la requêtes
         const options = {
           headers : {
             "Content-type" : "application/json"
@@ -122,6 +132,7 @@ export default {
         .then(function(response){
           if(response.ok){
             alert("Vous êtes bien inscrit! Vous pouvez maintenant vous connecter.");
+            window.location = window.location.origin;
           }
           else{
             console.log("Mauvaise réponse du réseau.");
@@ -169,6 +180,7 @@ input{
 button{
   margin-top: 2%;
   margin-bottom: 5%;
+  font-size: large;
 }
 
 img{

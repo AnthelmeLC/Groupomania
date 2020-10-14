@@ -1,18 +1,29 @@
 const {Sequelize, DataTypes} = require("sequelize");
-const sequelize = new Sequelize("sqlite::memory:");
+const { databaseVersion } = require("../DBinstance");
+const sequelize = require("../DBinstance");
 
 const Message = sequelize.define("Message", {
-    userId : {
+    id : {
         type : DataTypes.NUMBER,
+        primaryKey : true,
+        autoIncrement : true,
         allowNull : false
     },
-    time : {
-        type : DataTypes.DATE,
+    userId : {
+        type : DataTypes.NUMBER,
         allowNull : false
     },
     message : {
         type : DataTypes.STRING,
         allowNull : false
+    },
+    createdAt : {
+        type : DataTypes.DATE,
+        allowNull : false
+    },
+    updatedAt : {
+        type : DataTypes.DATE,
+        allowNull : true
     }
 });
 
