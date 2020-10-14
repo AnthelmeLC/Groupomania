@@ -4,49 +4,56 @@
     <p>Veuillez renseigner tous les champs ci-dessous pour vous inscrire.</p>
     <form class="container" name="signup" id="signup">
       
-        <div class="row">
-          <div class="col-md-5 offset-md-1">
-            <label for="name">Nom :</label>
-            <input type="text" required name="name">
-          </div>
+      <div class="row">
 
-          <div class="col-md-4">
-            <label for="surname">Prénom :</label>
-            <input type="text" required name="surname">
-          </div>
+        <div class="col-md-5 offset-md-1">
+          <label for="name">Nom :</label>
+          <input type="text" required name="name">
         </div>
 
-        <div class="row">
-          <div class="col-md-5 offset-md-1">
-            <label for="pseudo">Pseudo :</label>
-            <input type="text" required name="pseudo">
-          </div>
-
-          <div class="col-md-4">
-            <label for="email">Email :</label>
-            <input type="email" id="email" required name="email">
-          </div>
+        <div class="col-md-4">
+          <label for="surname">Prénom :</label>
+          <input type="text" required name="surname">
         </div>
 
-        <div class="row">
-          <div class="col-md-5 offset-md-1">
-            <label for="password">Mot de passe :</label>
-            <input type="password" id="password" required name="password">
-          </div>
+      </div>
 
-          <div class="col-md-4">
-            <label for="confirmation-password">Confirmation :</label>
-            <input type="password" id="password-confirmation" required>
-          </div>
+      <div class="row">
+
+        <div class="col-md-5 offset-md-1">
+          <label for="pseudo">Pseudo :</label>
+          <input type="text" required name="pseudo">
         </div>
 
-        <div class="row">
-          <div class="col-md-5 offset-md-1">
-            <label for="job">Poste dans l'entreprise :</label>
-            <input type="text" required name="job">
-          </div>
+        <div class="col-md-4">
+          <label for="email">Email :</label>
+          <input type="email" id="email" required name="email">
         </div>
 
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-5 offset-md-1">
+          <label for="password">Mot de passe :</label>
+          <input type="password" id="password" required name="password">
+        </div>
+
+        <div class="col-md-4">
+          <label for="confirmation-password">Confirmation :</label>
+          <input type="password" id="password-confirmation" required>
+        </div>
+
+      </div>
+  
+      <div class="row">
+
+        <div class="col-md-5 offset-md-1">
+          <label for="job">Poste dans l'entreprise :</label>
+          <input type="text" required name="job">
+        </div>
+
+      </div>
 
       <button class="btn btn-primary">Inscription</button>
 
@@ -96,7 +103,7 @@ export default {
       }
     })
 
-    //Evénement à l'envoie du formulaire
+    //Evénement à l'envoi du formulaire
     const signup = document.getElementById("signup");
     signup.addEventListener("submit", function(e){
       e.preventDefault();
@@ -173,6 +180,7 @@ input{
 button{
   margin-top: 2%;
   margin-bottom: 5%;
+  font-size: large;
 }
 
 img{

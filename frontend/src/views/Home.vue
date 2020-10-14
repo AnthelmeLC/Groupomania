@@ -9,7 +9,9 @@
 <script>
 export default {
   name: 'Home',
+
   beforeCreate(){
+    //si l'utilisateur est déjà connecté, renvoi direct vers la page de forum
     if(localStorage.getItem("token")){
       window.location = window.location.origin + "/forum";
     }
@@ -21,9 +23,11 @@ export default {
 img{
   max-width: 400px;
 }
+
 h1{
   margin-bottom: 7%;
 }
+
 a{
   font-size: x-large;
   margin: 1% 1% 5% 1%;

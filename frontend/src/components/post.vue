@@ -11,11 +11,15 @@
 <script>
 export default {
   name: 'post',
+
   mounted(){
     const post = document.getElementById("post");
+    //événement submit de l'envoi d'un nouveau message
     post.addEventListener("submit", function(e){
       e.preventDefault();
+      //récupération du texte écrit par l'utilisateur
       const message = document.getElementById("text").value;
+      //options de la requête
       const options = {
         headers : {
           "Content-type" : "application/json",
@@ -24,9 +28,12 @@ export default {
         method : "POST",
         body : JSON.stringify({message : message, userId : localStorage.getItem("userId")})
       };
+      //envoi du nouveau message
       fetch("http://localhost:3000/api/messages/", options)
       .then(function(response){
         if(response.ok){
+          //l'envoi a réussi
+          //redirection vers la page du forum
           window.location = window.location.origin + "/forum";
         }
         else{

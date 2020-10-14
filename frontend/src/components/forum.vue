@@ -18,22 +18,29 @@
 <script>
 export default {
     name: 'forum',
+
     data(){
         return {msg : []}
     },
+
     beforeMount(){
+        //options de la requête
         const options = {
             headers : {
                 authorization : localStorage.getItem("userId") + " " + localStorage.getItem("token")
             }
         };
+        //requête pour récupérer tous les messages à afficher
         fetch("http://localhost:3000/api/messages/", options)
         .then((response) => {
             if(response.ok){
+                //récupération de tous les messages réussie
                 response.json()
                 .then((myJson) =>{
+                    //insertion des messages dans data
                     this.msg = myJson;
                     const messages = document.getElementById('messages');
+                    //mise en page de chaque message contenu dans data
                     for(let message of this.msg){
                         const newMessage = document.createElement("div");
                         newMessage.innerHTML = `<div class="col-md-8"><p>${message.message}</p></div><div class="col-md-4"><div class="row"><div class="col-md-7"><p>${message.createdAt}</p><p>${message.User.pseudo}<br>${message.User.job}</p></div><div class="col-md-5" id="img${message.id}"><a href="/message?id=${message.id}"><img src="./logoWrite.png" alt="logo modifier le message" id="modify${message.id}" title="Modifier le message"></a><img src="./logoWrong.png" alt="logo supprimer le message" id="delete${message.id}" title="Supprimer le message"></div></div></div>`;
@@ -44,8 +51,10 @@ export default {
                             img.setAttribute("class", "none");
                         }
 
+                        //événement click sur chaque boutton delete
                         const remove = document.getElementById("delete" + message.id);
                         remove.addEventListener("click", function(){
+                            //options de la requête
                             const options = {
                                 headers : {
                                   "Content-type" : "application/json",
@@ -53,10 +62,14 @@ export default {
                                 },
                                 method : "DELETE"
                             };
+                            //envoi de la requête de suppression du message
                             fetch("http://localhost:3000/api/messages/" + message.id, options)
                             .then(function(response){
                                 if(response.ok){
+                                    //suppression dans la DB réussie
+                                    //avertissement de la suppression à l'utilisateur
                                     alert("Message supprimé!");
+                                    //rafraichissement de la page du forum
                                     window.location.reload();
                                 }
                                 else{
@@ -114,6 +127,7 @@ h1{
     color: white;
     border-radius: 20px;
     margin-bottom: 0.5%;
+    font-size: large;
 }
 
 .col-md-8{
@@ -134,6 +148,7 @@ h1{
     border: midnightblue solid 2px;
     margin-top: 0.5%;
     margin-bottom: 0.5%;
+    font-size: large;
 }
 
 .none{

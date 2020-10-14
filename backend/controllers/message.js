@@ -34,7 +34,6 @@ exports.createMessage = (req, res, next) => {
 //MODIFY ONE
 exports.modifyMessage = (req, res, next) => {
     console.log(req.body.message);
-    //recherche du message dans la base de donnée
     Message.update({message : req.body.message, updatedAt : Date.now()}, {
         where : {id : req.params.id}
     })

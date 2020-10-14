@@ -65,12 +65,15 @@ img{
       const home = document.getElementById("home");
       const location = window.location;
       const origin = window.location.origin;
+      //disparrition du boutton de déconnexion sur les pages où l'utilisateur n'est pas connecté + changement du lien principal
       if(location == origin + "/" || location == origin + "/signup" || location == origin + "/login"){
         disconnect.setAttribute("class", "none");
         home.setAttribute("href", "/");
       }
+      //événement de déconnexion
       disconnect.addEventListener("click", function(e){
         e.preventDefault();
+        //suppression du token d'authentification, du UserIs et du modérateur
         localStorage.clear();
         window.location = origin + "/"
         return false;

@@ -4,17 +4,17 @@
     <p>Entrez votre identifiant et votre mot de passe pour vous connecter.</p>
     <form class="container" id="login-form" name="login-form">
       
-        <div class="row">
-          <div class="col-md-5 offset-md-1">
-            <label for="email">email :</label>
-            <input type="email" required id="email" name="email">
-          </div>
-
-          <div class="col-md-4">
-            <label for="password">Mot de passe :</label>
-            <input type="password" required name="password">
-          </div>
+      <div class="row">
+        <div class="col-md-5 offset-md-1">
+          <label for="email">email :</label>
+          <input type="email" required id="email" name="email">
         </div>
+
+        <div class="col-md-4">
+          <label for="password">Mot de passe :</label>
+          <input type="password" required name="password">
+        </div>
+      </div>
 
       <button class="btn btn-info">Connexion</button>
 
@@ -25,15 +25,19 @@
 <script>
 export default {
   name: 'login',
+
   mounted(){
+    //événement submit de la connexion
     const login = document.getElementById("login-form");
     login.addEventListener("submit", function(e){
       e.preventDefault();
+      //récupération des données entrées par l'utilisateur
       const form = new FormData(login);
       let user = {};
       for(let key of form.keys()){
         user[key] = form.get(key);
       }
+      //options de la requête
       const options = {
         headers : {
           "Content-type" : "application/json"
@@ -45,11 +49,14 @@ export default {
       fetch("http://localhost:3000/api/auth/login", options)
       .then(function(response){
         if(response.ok){
+          //connexion réussie
           response.json().then(function(myJson){
+            //récupération du token d'authentification, du userId et si l'utilisateur est modérateur
             localStorage.clear;
             localStorage.setItem("userId" , myJson.userId);
             localStorage.setItem("token" , myJson.token);
             localStorage.setItem("moderator", myJson.moderator);
+            //redirection vers la page du forum
             window.location = window.location.origin + "/forum";
           });
         }
