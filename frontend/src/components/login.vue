@@ -46,10 +46,10 @@ export default {
       .then(function(response){
         if(response.ok){
           response.json().then(function(myJson){
-            sessionStorage.clear;
-            sessionStorage.setItem("userId" , myJson.userId);
-            sessionStorage.setItem("token" , myJson.token);
-            sessionStorage.setItem("moderator", myJson.moderator);
+            localStorage.clear;
+            localStorage.setItem("userId" , myJson.userId);
+            localStorage.setItem("token" , myJson.token);
+            localStorage.setItem("moderator", myJson.moderator);
             window.location = window.location.origin + "/forum";
           });
         }

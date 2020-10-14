@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
         const decodedToken = jwt.verify(token, "wQ5EW3QAuK5TT1G"); //Le code de salage est en clair pour un soucis que ça fonctionne pour mon mentor et le jury de OpenClassRooms
         const userId = decodedToken.userId;
         //si l'utilisateur n'est pas authentifié
-        if(req.body.userId && req.body.userId !== userId){
+        if(req.body.userId && req.body.userId != userId){
             throw new Error({message : "User ID non valable!"});
         }
         //si l'utilisateur est authentifié

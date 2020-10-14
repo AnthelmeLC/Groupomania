@@ -12,17 +12,17 @@
 export default {
   name: 'post',
   mounted(){
-    console.log(sessionStorage.getItem("userId"));
     const post = document.getElementById("post");
     post.addEventListener("submit", function(e){
       e.preventDefault();
       const message = document.getElementById("text").value;
       const options = {
         headers : {
-          "Content-type" : "application/json"
+          "Content-type" : "application/json",
+          authorization : localStorage.getItem("userId") + " " + localStorage.getItem("token")
         },
         method : "POST",
-        body : JSON.stringify({message : message, userId : sessionStorage.getItem("userId")})
+        body : JSON.stringify({message : message, userId : localStorage.getItem("userId")})
       };
       fetch("http://localhost:3000/api/messages/", options)
       .then(function(response){

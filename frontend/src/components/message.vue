@@ -15,8 +15,13 @@ export default {
         return {msg : null};
     },
     beforeMount(){
+        const options = {
+          headers : {
+            authorization : localStorage.getItem("userId") + " " + localStorage.getItem("token")
+          }
+        };
         const currentMessage = window.location.href.split("?id=")[1];
-        fetch("http://localhost:3000/api/messages/" + currentMessage)
+        fetch("http://localhost:3000/api/messages/" + currentMessage, options)
         .then((response) => {
           if(response.ok){
               response.json()
@@ -41,7 +46,8 @@ export default {
           const currentMessage = window.location.search.substring(4);
           const options = {
             headers : {
-              "Content-type" : "application/json"
+              "Content-type" : "application/json",
+              authorization : localStorage.getItem("userId") + " " + localStorage.getItem("token")
             },
             method : "PUT",
             body : JSON.stringify({message : textArea.value})
