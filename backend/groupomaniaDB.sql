@@ -83,7 +83,7 @@ CREATE TABLE `users` (
 --
 
 LOCK TABLES `users` WRITE;
-INSERT INTO Users VALUES (name, surname, pseudo, email, password, job, moderator) ('Jane', 'Doe', 'UltimateModerator', 'moderator@moderator.com', '$2b$10$MW1iRQnajWs.KakQuIITmuOYZAJtLxoTmTtyTop82d.3Ejh9RNSfO', 'chargée de communication', true);
+INSERT INTO Users (name, surname, pseudo, email, password, job, moderator) VALUES ('Jane', 'Doe', 'UltimateModerator', 'moderator@moderator.com', '$2b$10$MW1iRQnajWs.KakQuIITmuOYZAJtLxoTmTtyTop82d.3Ejh9RNSfO', 'chargée de communication', true);
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
