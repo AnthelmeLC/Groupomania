@@ -8,7 +8,12 @@
 
 <script>
 export default {
-  name: 'Home'
+  name: 'Home',
+  beforeCreate(){
+    if(localStorage.getItem("token")){
+      window.location = window.location.origin + "/forum";
+    }
+  }
 }
 </script>
 
