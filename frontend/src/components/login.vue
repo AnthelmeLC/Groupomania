@@ -12,7 +12,7 @@
 
         <div class="col-md-4">
           <label for="password">Mot de passe :</label>
-          <input type="password" required name="password">
+          <input type="password" required name="password" id="password">
         </div>
       </div>
 

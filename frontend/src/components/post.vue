@@ -2,6 +2,7 @@
   <section id="talk">
     <h1>Exprimez-vous !</h1>
     <form id="post">
+      <label for="text">message :</label>
       <textarea name="message" rows="5" cols="100" id="text" required></textarea>
       <button class="btn btn-info" >Envoyer</button>
     </form>
@@ -51,6 +52,10 @@ export default {
 <style scoped lang="scss">
 h1{
   margin-bottom: 3%;
+}
+
+label{
+  display: block;
 }
 
 textarea{

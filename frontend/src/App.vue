@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <a href="/forum" id="home"><img src="./assets/icon-left-font-monochrome-black.svg" alt="Logo Groupimania" id="logoGroupomania"></a>
+      <a href="/forum" id="home"><img src="./assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania" id="logoGroupomania"></a>
       <button class="btn btn-info" id="disconnect">Deconnexion</button>
     </div>
     <router-view/>
@@ -31,6 +31,10 @@
   }
 }
 
+body{
+  background-color: #0b1f44;
+}
+
 #disconnect{
   position: absolute;
   right: 10%;
@@ -38,6 +42,16 @@
 
 img{
   max-width: 80%;
+}
+
+*{
+  
+  color: #d3515c;
+}
+
+.btn{
+  background-color:  #0b1f44;
+  border : solid #0b1f44;
 }
 
 .none{
@@ -63,12 +77,14 @@ img{
     mounted(){
       const disconnect = document.getElementById("disconnect");
       const home = document.getElementById("home");
+      const logo = document.getElementById("logoGroupomania");
       const location = window.location;
       const origin = window.location.origin;
       //disparrition du boutton de déconnexion sur les pages où l'utilisateur n'est pas connecté + changement du lien principal
       if(location == origin + "/" || location == origin + "/signup" || location == origin + "/login"){
         disconnect.setAttribute("class", "none");
         home.setAttribute("href", "/");
+        logo.setAttribute("src", "icon-left-font-monochrome-white.svg");
       }
       //événement de déconnexion
       disconnect.addEventListener("click", function(e){

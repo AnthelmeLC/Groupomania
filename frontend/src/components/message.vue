@@ -2,6 +2,7 @@
   <section id="message">
     <h1>Modifiez votre message :</h1>
     <form>
+      <label for="text">Message :</label>
       <textarea name="message" rows="5" cols="100" id="text"></textarea>
       <button class="btn btn-info" id="modify">Modifier</button>
     </form>
@@ -95,6 +96,7 @@ h1{
 textarea{
   border: #138496 solid 1px;
   margin-bottom: 1%;
+  max-width: 95%;
 }
 
 form{

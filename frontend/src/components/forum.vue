@@ -1,18 +1,14 @@
 <template>
-    <div class="midnightblue">
-        <div class="white">
-            <section class="container">
-                <h1>Lâchez vous !</h1>
-                <div class="text-align-left">
-                    <a href="/post" class="btn btn-info post">Poster</a>
-                    <div id="messages">
+    <section class="container">
+        <h1>Lâchez vous !</h1>
+        <div class="text-align-left">
+            <a href="/post" class="btn btn-info post">Poster</a>
+            <div id="messages">
 
-                    </div>
-                    <a href="/post" class="btn btn-info post">Poster</a>
-                </div>
-            </section>
+            </div>
+            <a href="/post" class="btn btn-info post">Poster</a>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -95,17 +91,12 @@ export default {
 </script>
 
 <style lang="scss">
-.midnightblue{
-    background-color: midnightblue;
+body{
+    background-color: #d3515c;
 }
 
-.white{
-    background-color: white;
-    max-width: 60%;
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: 3px;
-    padding-left: 3px;
+*{
+    color:  #0b1f44;
 }
 
 .logoGroupomania{
@@ -122,8 +113,8 @@ h1{
 }
 
 .bigRow{
-    border: midnightblue solid 2px;
-    background-color: #138496;
+    border:  #0b1f44 solid 2px;
+    background-color: #efeef0;
     color: white;
     border-radius: 20px;
     margin-bottom: 0.5%;
@@ -131,7 +122,7 @@ h1{
 }
 
 .col-md-8{
-    border-right: midnightblue 2px dotted;
+    border-right:  #0b1f44 2px dotted;
     p{
         text-align: left;
     }
@@ -145,7 +136,6 @@ h1{
     }
 }
 .post{
-    border: midnightblue solid 2px;
     margin-top: 0.5%;
     margin-bottom: 0.5%;
     font-size: large;
@@ -159,7 +149,7 @@ h1{
 @media all and (max-width: 768px){
     .col-md-8{
         border-right: none;
-        border-bottom: midnightblue 2px dotted;
+        border-bottom:  #0b1f44 2px dotted;
     }
 
     .col-md-4{
