@@ -8,12 +8,12 @@
 
         <div class="col-md-5 offset-md-1">
           <label for="name">Nom :</label>
-          <input type="text" required name="name">
+          <input type="text" required name="name" id="name">
         </div>
 
         <div class="col-md-4">
           <label for="surname">Prénom :</label>
-          <input type="text" required name="surname">
+          <input type="text" required name="surname" id="surname">
         </div>
 
       </div>
@@ -22,7 +22,7 @@
 
         <div class="col-md-5 offset-md-1">
           <label for="pseudo">Pseudo :</label>
-          <input type="text" required name="pseudo">
+          <input type="text" required name="pseudo" id="pseudo">
         </div>
 
         <div class="col-md-4">
@@ -40,7 +40,7 @@
         </div>
 
         <div class="col-md-4">
-          <label for="confirmation-password">Confirmation :</label>
+          <label for="password-confirmation">Confirmation :</label>
           <input type="password" id="password-confirmation" required>
         </div>
 
@@ -50,7 +50,7 @@
 
         <div class="col-md-5 offset-md-1">
           <label for="job">Poste dans l'entreprise :</label>
-          <input type="text" required name="job">
+          <input type="text" required name="job" id="job">
         </div>
 
       </div>

@@ -43,7 +43,7 @@ CREATE TABLE `messages` (
   `message` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_userId` (`userId`),
-  CONSTRAINT `fk_userId` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
+  CONSTRAINT `fk_userId` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

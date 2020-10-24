@@ -1,18 +1,14 @@
 <template>
-    <div class="midnightblue">
-        <div class="white">
-            <section class="container">
-                <h1>Lâchez vous !</h1>
-                <div class="text-align-left">
-                    <a href="/post" class="btn btn-info post">Poster</a>
-                    <div id="messages">
+    <section class="container">
+        <h1>Lâchez vous !</h1>
+        <div class="text-align-left">
+            <a href="/post" class="btn btn-info post">Poster</a>
+            <div id="messages">
 
-                    </div>
-                    <a href="/post" class="btn btn-info post">Poster</a>
-                </div>
-            </section>
+            </div>
+            <a href="/post" class="btn btn-info post">Poster</a>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -42,8 +38,9 @@ export default {
                     const messages = document.getElementById('messages');
                     //mise en page de chaque message contenu dans data
                     for(let message of this.msg){
+                        const date = new Date(message.createdAt);
                         const newMessage = document.createElement("div");
-                        newMessage.innerHTML = `<div class="col-md-8"><p>${message.message}</p></div><div class="col-md-4"><div class="row"><div class="col-md-7"><p>${message.createdAt}</p><p>${message.User.pseudo}<br>${message.User.job}</p></div><div class="col-md-5" id="img${message.id}"><a href="/message?id=${message.id}"><img src="./logoWrite.png" alt="logo modifier le message" id="modify${message.id}" title="Modifier le message"></a><img src="./logoWrong.png" alt="logo supprimer le message" id="delete${message.id}" title="Supprimer le message"></div></div></div>`;
+                        newMessage.innerHTML = `<div class="col-md-8"><p>${message.message}</p></div><div class="col-md-4"><div class="row"><div class="col-md-7"><p>le ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} à ${date.getHours()}h ${date.getMinutes()}</p><p>${message.User.pseudo}<br>${message.User.job}</p></div><div class="col-md-5" id="img${message.id}"><a href="/message?id=${message.id}"><img src="./logoWrite.png" alt="logo modifier le message" id="modify${message.id}" title="Modifier le message"></a><img src="./logoWrong.png" alt="logo supprimer le message" id="delete${message.id}" title="Supprimer le message"></div></div></div>`;
                         messages.appendChild(newMessage);
                         newMessage.setAttribute("class", "row bigRow");
                         if(message.User.id != localStorage.getItem("userId") && localStorage.getItem("moderator") != "true"){
@@ -95,17 +92,12 @@ export default {
 </script>
 
 <style lang="scss">
-.midnightblue{
-    background-color: midnightblue;
+body{
+    background-color: #d3515c;
 }
 
-.white{
-    background-color: white;
-    max-width: 60%;
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: 3px;
-    padding-left: 3px;
+*{
+    color:  #0b1f44;
 }
 
 .logoGroupomania{
@@ -122,8 +114,8 @@ h1{
 }
 
 .bigRow{
-    border: midnightblue solid 2px;
-    background-color: #138496;
+    border:  #0b1f44 solid 2px;
+    background-color: #efeef0;
     color: white;
     border-radius: 20px;
     margin-bottom: 0.5%;
@@ -131,7 +123,7 @@ h1{
 }
 
 .col-md-8{
-    border-right: midnightblue 2px dotted;
+    border-right:  #0b1f44 2px dotted;
     p{
         text-align: left;
     }
@@ -145,7 +137,6 @@ h1{
     }
 }
 .post{
-    border: midnightblue solid 2px;
     margin-top: 0.5%;
     margin-bottom: 0.5%;
     font-size: large;
@@ -159,7 +150,7 @@ h1{
 @media all and (max-width: 768px){
     .col-md-8{
         border-right: none;
-        border-bottom: midnightblue 2px dotted;
+        border-bottom:  #0b1f44 2px dotted;
     }
 
     .col-md-4{
