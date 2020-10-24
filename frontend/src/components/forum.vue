@@ -38,8 +38,9 @@ export default {
                     const messages = document.getElementById('messages');
                     //mise en page de chaque message contenu dans data
                     for(let message of this.msg){
+                        const date = new Date(message.createdAt);
                         const newMessage = document.createElement("div");
-                        newMessage.innerHTML = `<div class="col-md-8"><p>${message.message}</p></div><div class="col-md-4"><div class="row"><div class="col-md-7"><p>${message.createdAt}</p><p>${message.User.pseudo}<br>${message.User.job}</p></div><div class="col-md-5" id="img${message.id}"><a href="/message?id=${message.id}"><img src="./logoWrite.png" alt="logo modifier le message" id="modify${message.id}" title="Modifier le message"></a><img src="./logoWrong.png" alt="logo supprimer le message" id="delete${message.id}" title="Supprimer le message"></div></div></div>`;
+                        newMessage.innerHTML = `<div class="col-md-8"><p>${message.message}</p></div><div class="col-md-4"><div class="row"><div class="col-md-7"><p>le ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} à ${date.getHours()}h ${date.getMinutes()}</p><p>${message.User.pseudo}<br>${message.User.job}</p></div><div class="col-md-5" id="img${message.id}"><a href="/message?id=${message.id}"><img src="./logoWrite.png" alt="logo modifier le message" id="modify${message.id}" title="Modifier le message"></a><img src="./logoWrong.png" alt="logo supprimer le message" id="delete${message.id}" title="Supprimer le message"></div></div></div>`;
                         messages.appendChild(newMessage);
                         newMessage.setAttribute("class", "row bigRow");
                         if(message.User.id != localStorage.getItem("userId") && localStorage.getItem("moderator") != "true"){
